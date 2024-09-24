@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button, TextField, Typography, Box } from "@mui/material";
+import { styled } from "@mui/system";
 import axios from "axios";
+
+const StyledModal = styled(Box)({
+  padding: 20,
+  borderRadius: 8,
+  backgroundColor: "#f9f9f9",
+  margin: "auto",
+  marginTop: "10%",
+  maxWidth: 400,
+  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+});
 
 const CreatePost: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -41,18 +52,8 @@ const CreatePost: React.FC = () => {
         Create Post
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Box
-          sx={{
-            padding: 3,
-            borderRadius: 2,
-            backgroundColor: "#fff",
-            margin: "auto",
-            marginTop: "10%",
-            maxWidth: 400,
-            boxShadow: 3,
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
+        <StyledModal>
+          <Typography variant="h5" gutterBottom align="center">
             Create a New Post
           </Typography>
           <TextField
@@ -62,16 +63,9 @@ const CreatePost: React.FC = () => {
             error={!!error && error.includes("title")}
             helperText={error && error.includes("title") ? error : ""}
             fullWidth
-            sx={{
-              marginBottom: 2,
-              "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "red",
-                },
-              "& .MuiFormHelperText-root.Mui-error": {
-                color: "red",
-              },
-            }}
+            sx={{ marginBottom: 2 }}
+            variant="outlined"
+            size="small"
           />
           <TextField
             label="Post Content"
@@ -82,26 +76,20 @@ const CreatePost: React.FC = () => {
             error={!!error && error.includes("content")}
             helperText={error && error.includes("content") ? error : ""}
             fullWidth
-            sx={{
-              marginBottom: 2,
-              "& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "red",
-                },
-              "& .MuiFormHelperText-root.Mui-error": {
-                color: "red",
-              },
-            }}
+            sx={{ marginBottom: 2 }}
+            variant="outlined"
+            size="small"
           />
           <Button
             variant="contained"
             color="primary"
             onClick={handleCreate}
+            fullWidth
             sx={{ marginTop: 2 }}
           >
             Submit
           </Button>
-        </Box>
+        </StyledModal>
       </Modal>
     </div>
   );

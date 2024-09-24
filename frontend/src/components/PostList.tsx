@@ -11,6 +11,25 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import { styled } from "@mui/system";
+
+const StyledCard = styled(Card)({
+  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.2s",
+  "&:hover": {
+    transform: "scale(1.03)",
+  },
+});
+
+const StyledModal = styled(Box)({
+  padding: 20,
+  borderRadius: 8,
+  backgroundColor: "#f9f9f9",
+  margin: "auto",
+  marginTop: "10%",
+  maxWidth: 600,
+  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+});
 
 interface Post {
   id: number;
@@ -72,13 +91,13 @@ const PostList: React.FC = () => {
         {posts.length > 0 ? (
           posts.map((post) => (
             <Grid item xs={12} sm={6} md={4} key={post.id}>
-              <Card
-                sx={{ boxShadow: 3, height: "100%", cursor: "pointer" }}
+              <StyledCard
                 onClick={() => handleOpenModal(post)}
+                sx={{ cursor: "pointer", height: "100%" }}
               >
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    {post.title} {/* Displaying the title */}
+                    {post.title}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
                     {post.content}
@@ -93,7 +112,7 @@ const PostList: React.FC = () => {
                     })}
                   </Typography>
                 </CardContent>
-              </Card>
+              </StyledCard>
             </Grid>
           ))
         ) : (
@@ -106,26 +125,17 @@ const PostList: React.FC = () => {
           </Grid>
         )}
       </Grid>
+
       {/* Modal for post details */}
       <Modal open={open} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            padding: 3,
-            borderRadius: 2,
-            backgroundColor: "#fff",
-            margin: "auto",
-            marginTop: "10%",
-            maxWidth: 600,
-            boxShadow: 3,
-          }}
-        >
+        <StyledModal>
           {selectedPost && (
             <>
-              <Typography variant="h6" gutterBottom>
-                {selectedPost.title} {/* Displaying the title */}
+              <Typography variant="h5" gutterBottom>
+                {selectedPost.title}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                {selectedPost.content} {/* Displaying the content */}
+                {selectedPost.content}
               </Typography>
               <Typography variant="body2" color="textSecondary">
                 Comments:
@@ -146,6 +156,8 @@ const PostList: React.FC = () => {
                 }
                 fullWidth
                 sx={{ marginTop: 2 }}
+                variant="outlined"
+                size="small"
               />
               <Button
                 variant="contained"
@@ -161,7 +173,7 @@ const PostList: React.FC = () => {
               </Button>
             </>
           )}
-        </Box>
+        </StyledModal>
       </Modal>
     </Container>
   );

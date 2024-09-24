@@ -15,10 +15,12 @@ router.get("/", (req, res) => {
 
 // Create a post
 router.post("/", (req, res) => {
-  const { content } = req.body;
+  const { title, content } = req.body;
+  const currentDate = new Date(); // Get current date
+
   db.run(
-    "INSERT INTO posts (content, date) VALUES (?, ?)",
-    [content, new Date()],
+    "INSERT INTO posts (title, content, date) VALUES (?, ?, ?)",
+    [title, content, currentDate.toISOString()], // Store date as ISO string
     function (err) {
       if (err) {
         return res.status(500).json({ error: err.message });
