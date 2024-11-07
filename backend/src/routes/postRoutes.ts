@@ -13,10 +13,24 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  db.all("SELECT * FROM posts WHERE id = ?", [id], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ post: rows });
+  });
+});
+
 // Create a post
 router.post("/", (req, res) => {
   const { title, content } = req.body;
   const currentDate = new Date(); // Get current date
+
+  if (title == null || content == null) {
+    return res.status(400).json({ error: "Title or content is missing" });
+  }
 
   db.run(
     "INSERT INTO posts (title, content, date) VALUES (?, ?, ?)",
@@ -25,6 +39,7 @@ router.post("/", (req, res) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
+
       res.json({ postId: this.lastID });
     }
   );
@@ -40,6 +55,15 @@ router.get("/:id/comments", (req, res) => {
     res.json({ comments: rows });
   });
 });
+
+router.delete("/:id/comments", (req, res) => {
+  const { id } = req.params;
+  db.run("DELETE FROM posts WHERE id = ?", [id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ postId: id });
+  });
 
 // Add a comment to a post
 router.post("/:id/comments", (req, res) => {

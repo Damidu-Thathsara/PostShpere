@@ -31,7 +31,7 @@ const StyledModal = styled(Box)({
   boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
 });
 
-interface Post {
+export interface Post {
   id: number;
   title: string;
   content: string;
@@ -95,6 +95,7 @@ const PostList: React.FC = () => {
                 onClick={() => handleOpenModal(post)}
                 sx={{ cursor: "pointer", height: "100%" }}
               >
+                There are {posts.length} posts available
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     {post.title}

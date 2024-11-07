@@ -18,6 +18,7 @@ const CreatePost: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleCreate = () => {
     // Validate title and content before sending the request
@@ -29,6 +30,8 @@ const CreatePost: React.FC = () => {
       setError("Post content cannot be empty.");
       return;
     }
+
+    
 
     // Clear previous error
     setError(null);
